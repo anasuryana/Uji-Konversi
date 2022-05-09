@@ -52,29 +52,7 @@ function App() {
       btnSearch.current.disabled = false
       btnSearch.current.innerHTML = 'Search'
       console.log(error)
-    })
-    // for(let i=1;i<=10000;i++){
-    //   newrow = tblMainBody.insertRow(-1)
-    //   newcell = newrow.insertCell(0)
-    //   newcell.onclick = () => {
-    //     console.log('klik baris ke' +i)
-    //   }
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(1)
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(2)
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(3)
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(4)
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(5)
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(6)
-    //   newcell.innerHTML = "baris " +i
-    //   newcell = newrow.insertCell(7)
-    //   newcell.innerHTML = "baris " +i
-    // }
+    })   
   }
   return (
     <div style={{padding : 10}}>
