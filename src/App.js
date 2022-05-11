@@ -3,9 +3,10 @@ import {Button, Container, Row, Col, InputGroup, FormControl,ButtonGroup,Dropdow
 import { Helmet } from 'react-helmet'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClipboard,faFileExport,faFileExcel } from '@fortawesome/free-solid-svg-icons'
-import { useRef } from 'react'
+import { useRef,useState } from 'react'
 import axios from 'axios'
 import numeral from 'numeral'
+import WMSTableSimple from './components/WMSTableSimple'
 
 function App() {
   const endpoint = process.env.REACT_APP_API_ENDPOINT+'/wms/SER/conversion_test'
@@ -14,45 +15,75 @@ function App() {
   const ajuDate2 = useRef()
   const model = useRef()
   const nomorAju = useRef()
-  const tblMain = useRef()  
-  function getData() {    
-    btnSearch.current.disabled = true
-    btnSearch.current.innerHTML = 'Please wait'
-    const tblMainBody = tblMain.current.getElementsByTagName('tbody')[0]
-    let newrow, newcell
-    tblMainBody.innerHTML = ''
-    axios.get(endpoint, {params: {
-      ajuDate: ajuDate.current.value
-      , model: model.current.value
-      , nomoraju: nomorAju.current.value
-      , ajuDate2: ajuDate2.current.value}}
-    ).then(res => {
-      btnSearch.current.disabled = false
-      btnSearch.current.innerHTML = 'Search'
-      for(let i=0;i<res.data.data.length; i++){        
-        newrow = tblMainBody.insertRow(-1)
-        newcell = newrow.insertCell(0)       
-        newcell.innerHTML = res.data.data[i].DLV_ZNOMOR_AJU
-        newcell = newrow.insertCell(1)
-        newcell.innerHTML = res.data.data[i].SER_ITMID
-        newcell = newrow.insertCell(2)
-        newcell.innerHTML = numeral(res.data.data[i].DLVQT).format(',')
-        newcell = newrow.insertCell(3)
-        newcell.innerHTML = res.data.data[i].SERD2_ITMCD
-        newcell = newrow.insertCell(4)
-        newcell.innerHTML = res.data.data[i].PARTDESCRIPTION
-        newcell = newrow.insertCell(5)
-        newcell.innerHTML = res.data.data[i].PER*1
-        newcell = newrow.insertCell(6)
-        newcell.innerHTML = numeral(res.data.data[i].RMQT).format(',')
-        newcell = newrow.insertCell(7)
-        newcell.innerHTML = res.data.data[i].PPSN1_BOMRV  
-      }
-    }).catch(function(error) {
-      btnSearch.current.disabled = false
-      btnSearch.current.innerHTML = 'Search'
-      console.log(error)
-    })   
+  const tblMain = useRef() 
+  const [childata, setChildata] = useState([ 
+    {id : 1, class : '', text : 'Nomor Aju'},
+    {id : 2, class : '', text : 'Model Code'}, 
+    {id : 3, class : 'text-end', text : 'Model Qty'},
+    {id : 4, class : '', text : 'Part Code'}, 
+    {id : 5, class : '', text : 'Part Description'}, 
+    {id : 6, class : 'text-end', text : 'PER'} 
+  ])
+  // const headerColumns = [ 
+  //   {id : 1, class : '', text : 'Nomor Aju'},
+  //   {id : 2, class : '', text : 'Model Code'}, 
+  //   {id : 3, class : 'text-end', text : 'Model Qty'},
+  //   {id : 4, class : '', text : 'Part Code'}, 
+  //   {id : 5, class : '', text : 'Part Description'}, 
+  //   {id : 6, class : 'text-end', text : 'PER'} 
+  // ]
+  function getData() {   
+    console.log('sebelum') 
+    console.log(childata)
+    console.log('coba ubah') 
+    setChildata(() => {
+      return  [
+        {id : 1, class : '', text : 'Nomor Aju'},
+        {id : 2, class : '', text : 'Model Code'}, 
+        {id : 3, class : 'text-end', text : 'Model Qty'},
+        {id : 4, class : '', text : 'Part Code'}, 
+        {id : 5, class : '', text : 'Part Description'}, 
+      ]
+    })
+    console.log(childata)
+    
+    // btnSearch.current.disabled = true
+    // btnSearch.current.innerHTML = 'Please wait'
+    // const tblMainBody = tblMain.current.getElementsByTagName('tbody')[0]
+    // let newrow, newcell
+    // tblMainBody.innerHTML = ''
+    // axios.get(endpoint, {params: {
+    //   ajuDate: ajuDate.current.value
+    //   , model: model.current.value
+    //   , nomoraju: nomorAju.current.value
+    //   , ajuDate2: ajuDate2.current.value}}
+    // ).then(res => {
+    //   btnSearch.current.disabled = false
+    //   btnSearch.current.innerHTML = 'Search'
+    //   for(let i=0;i<res.data.data.length; i++){        
+    //     newrow = tblMainBody.insertRow(-1)
+    //     newcell = newrow.insertCell(0)       
+    //     newcell.innerHTML = res.data.data[i].DLV_ZNOMOR_AJU
+    //     newcell = newrow.insertCell(1)
+    //     newcell.innerHTML = res.data.data[i].SER_ITMID
+    //     newcell = newrow.insertCell(2)
+    //     newcell.innerHTML = numeral(res.data.data[i].DLVQT).format(',')
+    //     newcell = newrow.insertCell(3)
+    //     newcell.innerHTML = res.data.data[i].SERD2_ITMCD
+    //     newcell = newrow.insertCell(4)
+    //     newcell.innerHTML = res.data.data[i].PARTDESCRIPTION
+    //     newcell = newrow.insertCell(5)
+    //     newcell.innerHTML = res.data.data[i].PER*1
+    //     newcell = newrow.insertCell(6)
+    //     newcell.innerHTML = numeral(res.data.data[i].RMQT).format(',')
+    //     newcell = newrow.insertCell(7)
+    //     newcell.innerHTML = res.data.data[i].PPSN1_BOMRV  
+    //   }
+    // }).catch(function(error) {
+    //   btnSearch.current.disabled = false
+    //   btnSearch.current.innerHTML = 'Search'
+    //   console.log(error)
+    // })   
   }
   return (
     <div style={{padding : 10}}>
@@ -99,7 +130,8 @@ function App() {
         </Row>
         <Row>
           <Col className='col-md-12 mb-1'>
-            <Table size='sm' responsive style={{fontSize: '75%'}} ref={tblMain}>
+            <WMSTableSimple HeaderColumns={childata} />            
+            {/* <Table size='sm' responsive style={{fontSize: '75%'}} ref={tblMain}>
               <thead className='table-light'>
                 <tr>
                   <th  className="align-middle ">Nomor Aju</th>
@@ -115,7 +147,7 @@ function App() {
               <tbody>
 
               </tbody>
-            </Table>
+            </Table> */}
           </Col>
         </Row>
       </Container>
