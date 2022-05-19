@@ -17,35 +17,54 @@ function App() {
   const nomorAju = useRef()
   const tblMain = useRef() 
   const [childata, setChildata] = useState([ 
-    {id : 1, class : '', text : 'Nomor Aju'},
-    {id : 2, class : '', text : 'Model Code'}, 
-    {id : 3, class : 'text-end', text : 'Model Qty'},
-    {id : 4, class : '', text : 'Part Code'}, 
-    {id : 5, class : '', text : 'Part Description'}, 
-    {id : 6, class : 'text-end', text : 'PER'} 
+    {id : 'NOMORAJU', class : '', text : 'Nomor Aju'},
+    {id : 'MODELCODE', class : '', text : 'Model Code'}, 
+    {id : 'MODELQTY', class : 'text-end', text : 'Model Qty'},
+    {id : 'PARTCODE', class : '', text : 'Part Code'}, 
+    {id : 'PER', class : 'text-end', text : 'PER'},    
+    {id : 'PARTNAME', class : '', text : 'Part Description'}, 
   ])
-  // const headerColumns = [ 
-  //   {id : 1, class : '', text : 'Nomor Aju'},
-  //   {id : 2, class : '', text : 'Model Code'}, 
-  //   {id : 3, class : 'text-end', text : 'Model Qty'},
-  //   {id : 4, class : '', text : 'Part Code'}, 
-  //   {id : 5, class : '', text : 'Part Description'}, 
-  //   {id : 6, class : 'text-end', text : 'PER'} 
-  // ]
-  function getData() {   
-    console.log('sebelum') 
-    console.log(childata)
-    console.log('coba ubah') 
+  const [bodydata, setBodydata] = useState([
+    { 
+      MODELCODE : '12333828',
+      NOMORAJU : 'AJU123',
+      PARTCODE : '22238839',
+      MODELQTY : 50,
+      PARTNAME : 'RESISTOR',
+      PER : 1,
+    },
+    { 
+      NOMORAJU : 'AJU124',
+      MODELCODE : '12333829',
+      MODELQTY : 45,
+      PARTNAME : 'HEATSINK',
+      PARTCODE : '22238837',
+      PER : 2,
+    },
+  ])
+  function getData() {
     setChildata(() => {
       return  [
-        {id : 1, class : '', text : 'Nomor Aju'},
-        {id : 2, class : '', text : 'Model Code'}, 
-        {id : 3, class : 'text-end', text : 'Model Qty'},
-        {id : 4, class : '', text : 'Part Code'}, 
-        {id : 5, class : '', text : 'Part Description'}, 
+        {id : 'NOMORAJU', class : '', text : 'Nomor Aju'},
+        {id : 'MODELCODE', class : '', text : 'Model Code'}, 
+        {id : 'MODELQTY', class : 'text-end', text : 'Model Qty'},
+        {id : 'PARTCODE', class : '', text : 'Part Code'}, 
+        {id : 'PER', class : 'text-end', text : 'PER'},    
+        {id : 'PARTNAME', class : '', text : 'Part Description'}, 
       ]
-    })
-    console.log(childata)
+    })    
+    setBodydata(() => {
+      return  [
+        { 
+          NOMORAJU : 'AJU125',
+          MODELCODE : '12333829',
+          MODELQTY : 45,
+          PARTNAME : 'HEATSINK',
+          PARTCODE : '22238837',
+          PER : 2,
+        },
+      ]
+    })    
     
     // btnSearch.current.disabled = true
     // btnSearch.current.innerHTML = 'Please wait'
@@ -130,7 +149,7 @@ function App() {
         </Row>
         <Row>
           <Col className='col-md-12 mb-1'>
-            <WMSTableSimple HeaderColumns={childata} />            
+            <WMSTableSimple HeaderColumns={childata} BodyColumns={bodydata}/>            
             {/* <Table size='sm' responsive style={{fontSize: '75%'}} ref={tblMain}>
               <thead className='table-light'>
                 <tr>
@@ -155,9 +174,4 @@ function App() {
   );
   
 }
-
-
-
-
-
 export default App;
